@@ -16,7 +16,8 @@ node {
  
   stage('5-Deploy-UAT') {
     deploy adapters: [tomcat10(credentialsId: 'deploy', path: '', url: 'http://54.204.83.221:8000/')], contextPath: null, war: 'target/*.war'
-    sshagent(['agentcredentials']) {
+   stage('5-Deploy-UAT') { 
+    sshagent(['mydevops22-credentials']) {
     sh "scp -o StrickHostKeyChecking=no target/*.war ec2-user@44.202.129.5:/opt/tomcat10/webapp
   }
   stage('6-EmailN') {
