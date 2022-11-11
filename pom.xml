@@ -9,7 +9,7 @@
 	
 	<name>maven-web-application</name>
 
-	<description>Maven Web Project for Java Project</description>
+	<description>Maven Web Project for only Java Project</description>
 
 	<organization>
 		<name>Landmark Technologies</name>
