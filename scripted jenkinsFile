@@ -1,0 +1,18 @@
+node{
+  def mavenHome = tool name: 'maven3.8.4'
+  stage('1Clone'){
+    git credentialsId: 'git-credentials', url: 'https://github.com/mydevops22/maven-web-application' 
+  }
+  stage('mavenBuild'){
+    sh "${mavenHome}/bin/mvn clean package"
+  }
+  stage('3CodeQuality'){
+    sh "${mavenHome}/bin/mvn sonar:sonar" 
+  }  
+  stage('4UploadArtifacts'){
+    sh "${mavenHome}/bin/mvn deploy"  
+  }
+  stage('5deploy2uat'){
+    sshagent(['slaveCredentials']) {
+    sh "scp -o StrictHostKeyChecking=no target/*.war ec2-user@18.204.199.176:/opt/tomcat10/webapps/uat.war "
+}  
