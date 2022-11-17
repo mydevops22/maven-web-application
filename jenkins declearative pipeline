@@ -1,4 +1,4 @@
-/declarative pipeline
+
 pipeline{
   agent any  
   tools {
@@ -18,7 +18,7 @@ pipeline{
       sh "mvn clean package"
       } 
     }
-    stage('3.CodeQuality') {
+   /* stage('3.CodeQuality') {
       steps{
       sh "echo reports done"
       //sh "mvn sonar:sonar"
@@ -54,6 +54,6 @@ Landmark Technologies''', cc: 'td-app@gmail.com', from: '', replyTo: '', subject
     mail bcc: 'td-app@gmail.com', body: '''Build complete 
 
 Landmark Technologies''', cc: 'td-app@gmail.com', from: '', replyTo: '', subject: 'Build succeed', to: 'td-app@gmail.com'
-    }
+*/}
   }  
-  }
+}
