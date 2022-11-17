@@ -1,0 +1,51 @@
+pipeline{
+  agent any
+  tools{
+    maven "maven3.8.4"
+  }   
+  stages{
+    stage('1.clone'){
+      steps{
+            sh "echo clonning the latest version of the code"
+            git credentialsId: 'git-credentials', url: 'https://github.com/mydevops22/maven-web-application'
+            sh "echo clonning successfull"  
+      }
+    } 
+    stage('2.build'){
+      steps{
+            sh "echo creating packages"
+            sh "echo packages created and ready for upload"
+            sh "mvn clean package"
+      }
+    }
+    stage('3.deploy2uat'){
+      steps{
+            sh "echo deploying to uat for further testing"
+            sshagent(['tomcat_Credentials']) {
+            sh "scp -o StrictHostKeyChecking=no target/*.war ec2-user@44.202.56.156:/opt/tomcat10/webapps/uatapp.war"    
+
+            }
+      }
+
+    }
+   stage('4.deploy2prod'){
+      steps{
+            sh "echo deploying to production"
+            timeout(time:5, unit:'HOURS'){
+            input message: "please engineers, approve deployment to production"
+            }        
+      }
+    }
+    post{
+        always{
+            mail bcc: 'echemebeng@yahoo.com', body: '''success,
+hi engineers,
+build was great.
+best,
+chemebeng,
++237673456014''', cc: 'echemebeng@yahoo.com', from: '', replyTo: '', subject: 'success', to: 'echemebeng@yahoo.com'
+        }
+    }
+  }
+}  
+   
