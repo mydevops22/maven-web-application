@@ -1,0 +1,22 @@
+pipeline{
+  agent any  
+  tools {
+    maven "maven3.8.4"
+  }
+  stages{
+    stage('1.CodeClone'){
+      steps{
+            sh "echo clonning the latest version of the code"
+            git credentialsId: 'git-credentials', url: 'https://github.com/mydevops22/maven-web-application'
+            sh "echo clonning successfull"  
+      }
+    } 
+    stage('2.mavenBuild'){
+      steps{
+            sh "echo creating packages"
+            sh "echo packages created and ready for upload"
+            sh "mvn clean package"
+      } 
+    }
+  }  
+}
